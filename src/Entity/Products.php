@@ -24,7 +24,7 @@ class Products
     #[ORM\Column(type: 'string', length: 255)]
     private $price;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'products')]
@@ -32,6 +32,7 @@ class Products
 
     #[ORM\ManyToOne(targetEntity: Bar::class, inversedBy: 'productID')]
     private $bar;
+
 
     public function __construct()
     {
@@ -125,5 +126,10 @@ class Products
         $this->bar = $bar;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

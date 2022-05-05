@@ -18,7 +18,7 @@ class Groupe
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
     #[ORM\OneToMany(mappedBy: 'groupeID', targetEntity: Bar::class)]
@@ -86,5 +86,10 @@ class Groupe
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

@@ -18,7 +18,7 @@ class Bar
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'bars')]
@@ -101,5 +101,10 @@ class Bar
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

@@ -35,10 +35,10 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $gender;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $mail;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $pictures;
 
     #[ORM\OneToMany(mappedBy: 'customerID', targetEntity: Order::class, orphanRemoval: true)]
@@ -207,5 +207,10 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFirstName();
     }
 }

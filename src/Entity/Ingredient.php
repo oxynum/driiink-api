@@ -18,7 +18,7 @@ class Ingredient
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'ingredientID')]
@@ -83,5 +83,10 @@ class Ingredient
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }
