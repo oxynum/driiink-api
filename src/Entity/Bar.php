@@ -2,29 +2,42 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BarRepository::class)]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'conference:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'conference:item']]],
+    order: ['id' => 'DESC'],
+    paginationEnabled: false,
+)]
 class Bar
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['conference:list', 'conference:item'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['conference:list', 'conference:item'])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['conference:list', 'conference:item'])]
     private $picture;
 
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'bars')]
+    #[Groups(['conference:list', 'conference:item'])]
     private $groupeID;
 
     #[ORM\OneToMany(mappedBy: 'bar', targetEntity: Products::class)]
+    #[Groups(['conference:list', 'conference:item'])]
     private $productID;
 
     public function __construct()
