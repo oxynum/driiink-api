@@ -31,7 +31,7 @@ class GroupeCrudController extends AbstractCrudController
                         'accept' => 'image/png, image/jpeg'
                     ]
                 ]),
-            AssociationField::new('bars')->setDisabled(),
+            AssociationField::new('bars'),
         ];
     }
 
