@@ -22,8 +22,15 @@ class Groupe
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
-    #[ORM\OneToMany(mappedBy: 'groupeID', targetEntity: Bar::class)]
+    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: Bar::class)]
     private $bars;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $updatedAt;
+
 
     public function __construct()
     {
@@ -59,6 +66,12 @@ class Groupe
         return $this;
     }
 
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
     /**
      * @return Collection<int, Bar>
      */
@@ -71,7 +84,7 @@ class Groupe
     {
         if (!$this->bars->contains($bar)) {
             $this->bars[] = $bar;
-            $bar->setGroupeID($this);
+            $bar->setGroupe($this);
         }
 
         return $this;
@@ -81,16 +94,35 @@ class Groupe
     {
         if ($this->bars->removeElement($bar)) {
             // set the owning side to null (unless already changed)
-            if ($bar->getGroupeID() === $this) {
-                $bar->setGroupeID(null);
+            if ($bar->getGroupe() === $this) {
+                $bar->setGroupe(null);
             }
         }
 
         return $this;
     }
 
-    public function __toString(): string
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->getName();
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

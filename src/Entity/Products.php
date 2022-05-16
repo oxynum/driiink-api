@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
-#[ApiResource()]
 class Products
 {
     #[ORM\Id]
@@ -30,15 +29,26 @@ class Products
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'products')]
-    private $ingredientID;
+    private $ingredient;
 
-    #[ORM\ManyToOne(targetEntity: Bar::class, inversedBy: 'productID')]
-    private $bar;
+    #[ORM\Column(type: 'time')]
+    private $prepTime;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $updatedAt;
+
+    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'product')]
+    private $menus;
+
 
 
     public function __construct()
     {
-        $this->ingredientID = new ArrayCollection();
+        $this->ingredient = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,41 +107,93 @@ class Products
     /**
      * @return Collection<int, Ingredient>
      */
-    public function getIngredientID(): Collection
+    public function getIngredient(): Collection
     {
-        return $this->ingredientID;
+        return $this->ingredient;
     }
 
-    public function addIngredientID(Ingredient $ingredientID): self
+    public function addIngredient(Ingredient $ingredient): self
     {
-        if (!$this->ingredientID->contains($ingredientID)) {
-            $this->ingredientID[] = $ingredientID;
+        if (!$this->ingredient->contains($ingredient)) {
+            $this->ingredient[] = $ingredient;
         }
 
         return $this;
     }
 
-    public function removeIngredientID(Ingredient $ingredientID): self
+    public function removeIngredient(Ingredient $ingredient): self
     {
-        $this->ingredientID->removeElement($ingredientID);
+        $this->ingredient->removeElement($ingredient);
 
         return $this;
     }
 
-    public function getBar(): ?Bar
-    {
-        return $this->bar;
-    }
-
-    public function setBar(?Bar $bar): self
-    {
-        $this->bar = $bar;
-
-        return $this;
-    }
 
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getPrepTime(): ?\DateTimeInterface
+    {
+        return $this->prepTime;
+    }
+
+    public function setPrepTime(\DateTimeInterface $prepTime): self
+    {
+        $this->prepTime = $prepTime;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
+            $menu->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            $menu->removeProduct($this);
+        }
+
+        return $this;
     }
 }

@@ -36,17 +36,22 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
     private $gender;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    private $mail;
+    private $email;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $pictures;
+    private $picture;
 
     #[ORM\OneToMany(mappedBy: 'customerID', targetEntity: Order::class, orphanRemoval: true)]
     private $orders;
 
+    #[ORM\OneToMany(mappedBy: 'customers', targetEntity: Bar::class)]
+    private $barFavorite;
+
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->barFavorite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,7 +196,7 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
-            $order->setCustomerID($this);
+            $order->setCustomer($this);
         }
 
         return $this;
@@ -201,8 +206,8 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->orders->removeElement($order)) {
             // set the owning side to null (unless already changed)
-            if ($order->getCustomerID() === $this) {
-                $order->setCustomerID(null);
+            if ($order->getCustomer() === $this) {
+                $order->setCustomer(null);
             }
         }
 
@@ -213,4 +218,36 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->getFirstName();
     }
+
+    /**
+     * @return Collection<int, Bar>
+     */
+    public function getBarFavorite(): Collection
+    {
+        return $this->barFavorite;
+    }
+
+    public function addBarFavorite(Bar $barFavorite): self
+    {
+        if (!$this->barFavorite->contains($barFavorite)) {
+            $this->barFavorite[] = $barFavorite;
+            $barFavorite->setCustomers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBarFavorite(Bar $barFavorite): self
+    {
+        if ($this->barFavorite->removeElement($barFavorite)) {
+            // set the owning side to null (unless already changed)
+            if ($barFavorite->getCustomers() === $this) {
+                $barFavorite->setCustomers(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

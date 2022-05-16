@@ -2,47 +2,47 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BarRepository::class)]
-#[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'conference:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'conference:item']]],
-    order: ['id' => 'DESC'],
-    paginationEnabled: false,
-)]
 class Bar
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['conference:list', 'conference:item'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['conference:list', 'conference:item'])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['conference:list', 'conference:item'])]
     private $picture;
 
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'bars')]
-    #[Groups(['conference:list', 'conference:item'])]
-    private $groupeID;
+    private $groupe;
 
-    #[ORM\OneToMany(mappedBy: 'bar', targetEntity: Products::class)]
-    #[Groups(['conference:list', 'conference:item'])]
-    private $productID;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $updatedAt;
+
+    #[ORM\ManyToMany(targetEntity: Barman::class, mappedBy: 'barOwned')]
+    private $barmen;
+
+    #[ORM\ManyToOne(targetEntity: Customers::class, inversedBy: 'barFavorite')]
+    private $customers;
+
+    #[ORM\OneToMany(mappedBy: 'bar', targetEntity: Menu::class)]
+    private $menu;
 
     public function __construct()
     {
-        $this->productID = new ArrayCollection();
+        $this->barmen = new ArrayCollection();
+        $this->menu = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,57 +67,115 @@ class Bar
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
         return $this;
     }
 
-    public function getGroupeID(): ?Groupe
+    public function getGroupe(): ?Groupe
     {
-        return $this->groupeID;
+        return $this->groupe;
     }
 
-    public function setGroupeID(?Groupe $groupeID): self
+    public function setGroupe(?Groupe $groupe): self
     {
-        $this->groupeID = $groupeID;
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Products>
+     * @return Collection<int, Barman>
      */
-    public function getProductID(): Collection
+    public function getBarmen(): Collection
     {
-        return $this->productID;
+        return $this->barmen;
     }
 
-    public function addProductID(Products $productID): self
+    public function addBarman(Barman $barman): self
     {
-        if (!$this->productID->contains($productID)) {
-            $this->productID[] = $productID;
-            $productID->setBar($this);
+        if (!$this->barmen->contains($barman)) {
+            $this->barmen[] = $barman;
+            $barman->addBarOwned($this);
         }
 
         return $this;
     }
 
-    public function removeProductID(Products $productID): self
+    public function removeBarman(Barman $barman): self
     {
-        if ($this->productID->removeElement($productID)) {
+        if ($this->barmen->removeElement($barman)) {
+            $barman->removeBarOwned($this);
+        }
+
+        return $this;
+    }
+
+    public function getCustomers(): ?Customers
+    {
+        return $this->customers;
+    }
+
+    public function setCustomers(?Customers $customers): self
+    {
+        $this->customers = $customers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenu(): Collection
+    {
+        return $this->menu;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menu->contains($menu)) {
+            $this->menu[] = $menu;
+            $menu->setBar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menu->removeElement($menu)) {
             // set the owning side to null (unless already changed)
-            if ($productID->getBar() === $this) {
-                $productID->setBar(null);
+            if ($menu->getBar() === $this) {
+                $menu->setBar(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->getName();
     }
 }

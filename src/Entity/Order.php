@@ -12,9 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 
-#[ApiResource(itemOperations: [
-    'get',
-])]
+
 class Order
 {
     #[ORM\Id]
@@ -24,18 +22,18 @@ class Order
 
     #[ORM\ManyToOne(targetEntity: OrderStatus::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    private $statusID;
+    private $status;
 
     #[ORM\ManyToMany(targetEntity: Products::class)]
-    private $productID;
+    private $product;
 
     #[ORM\ManyToOne(targetEntity: Customers::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    private $customerID;
+    private $customer;
 
     public function __construct()
     {
-        $this->productID = new ArrayCollection();
+        $this->product = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,14 +41,14 @@ class Order
         return $this->id;
     }
 
-    public function getStatusID(): ?OrderStatus
+    public function getStatus(): ?OrderStatus
     {
-        return $this->statusID;
+        return $this->status;
     }
 
-    public function setStatusID(?OrderStatus $statusID): self
+    public function setStatus(?OrderStatus $status): self
     {
-        $this->statusID = $statusID;
+        $this->status = $status;
 
         return $this;
     }
@@ -58,35 +56,35 @@ class Order
     /**
      * @return Collection<int, Products>
      */
-    public function getProductID(): Collection
+    public function getProduct(): Collection
     {
-        return $this->productID;
+        return $this->product;
     }
 
-    public function addProductID(Products $productID): self
+    public function addProduct(Products $product): self
     {
-        if (!$this->productID->contains($productID)) {
-            $this->productID[] = $productID;
+        if (!$this->product->contains($product)) {
+            $this->product[] = $product;
         }
 
         return $this;
     }
 
-    public function removeProductID(Products $productID): self
+    public function removeProduct(Products $product): self
     {
-        $this->productID->removeElement($productID);
+        $this->product->removeElement($product);
 
         return $this;
     }
 
-    public function getCustomerID(): ?Customers
+    public function getCustomer(): ?Customers
     {
-        return $this->customerID;
+        return $this->customer;
     }
 
-    public function setCustomerID(?Customers $customerID): self
+    public function setCustomer(?Customers $customer): self
     {
-        $this->customerID = $customerID;
+        $this->customer = $customer;
 
         return $this;
     }
