@@ -47,6 +47,9 @@ class Products
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'product')]
     private $menus;
 
+    #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
+    private $category;
+
 
 
     public function __construct()
@@ -184,6 +187,18 @@ class Products
         if ($this->menus->removeElement($menu)) {
             $menu->removeProduct($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?ProductCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?ProductCategory $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -8,6 +8,7 @@ use App\Entity\Ingredient;
 use App\Entity\Menu;
 use App\Entity\Order;
 use App\Entity\OrderStatus;
+use App\Entity\ProductCategory;
 use App\Entity\Products;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -75,6 +76,16 @@ class AppFixtures extends Fixture
         $ir = $manager->getRepository(Ingredient::class);
         $allIngredient = $ir->findAll();
 
+        for ($i = 0; $i <= 15; $i++){
+            $category = new ProductCategory();
+            $category->setName('Catégorie ' . $i);
+            $manager->persist($category);
+        }
+
+        $manager->flush();
+
+        $cr = $manager->getRepository(ProductCategory::class);
+        $allCategory = $cr->findAll();
 
         for ($i = 0; $i <= 50; $i++){
             $product = new Products();
@@ -83,6 +94,7 @@ class AppFixtures extends Fixture
             $product->setPrice(rand(100,10000));
             $product->setPrepTime(\DateTime::createFromFormat('i:s', "02:00"));
             $product->addIngredient($allIngredient[rand(0, count($allIngredient) - 1)]);
+            $product->setCategory($allCategory[rand(0, count($allCategory) - 1)]);
             $manager->persist($product);
         }
         $manager->flush();
