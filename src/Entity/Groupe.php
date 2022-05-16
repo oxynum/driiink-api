@@ -24,7 +24,7 @@ class Groupe
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
-    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: Bar::class)]
+    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: Bar::class, cascade: ['remove'])]
     private $bars;
 
     #[ORM\Column(type: 'datetime')]
@@ -106,13 +106,13 @@ class Groupe
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }

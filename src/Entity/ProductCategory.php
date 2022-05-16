@@ -21,6 +21,12 @@ class ProductCategory
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class)]
     private $products;
 
+    #[ORM\Column(type: 'datetime')]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    private $updatedAt;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -72,4 +78,16 @@ class ProductCategory
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
 }

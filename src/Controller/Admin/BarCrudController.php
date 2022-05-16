@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 
 class BarCrudController extends AbstractCrudController
 {
@@ -31,7 +32,11 @@ class BarCrudController extends AbstractCrudController
                         'accept' => 'image/png, image/jpeg'
                     ]
                 ]),
-            AssociationField::new('groupeID')->setDisabled(),
+            AssociationField::new('groupe'),
+            AssociationField::new('barmen')->hideOnIndex(),
+            AssociationField::new('menu')->hideOnIndex(),
+            TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
+            TimeField::new('updatedAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
         ];
     }
 

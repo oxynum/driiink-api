@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 
 class ProductsCrudController extends AbstractCrudController
 {
@@ -23,6 +24,7 @@ class ProductsCrudController extends AbstractCrudController
         return [
             IdField::new('id')->setDisabled(),
             TextField::new('name'),
+            TextField::new('description'),
             MoneyField::new('price')->setCurrency('EUR'),
             ImageField::new('picture')
                 ->setUploadDir('public/uploads/product')
@@ -33,8 +35,11 @@ class ProductsCrudController extends AbstractCrudController
                         'accept' => 'image/png, image/jpeg'
                     ]
                 ]),
-            AssociationField::new('ingredientID'),
-            AssociationField::new('bar'),
+            TimeField::new('prepTime')->setFormat("mm:ss"),
+            AssociationField::new('ingredient'),
+            AssociationField::new('menus'),
+            TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
+            TimeField::new('updatedAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
         ];
     }
 
