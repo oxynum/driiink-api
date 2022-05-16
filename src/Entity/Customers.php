@@ -170,26 +170,26 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): self
+    public function setEmail(string $email): self
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getPictures(): ?string
+    public function getPicture(): ?string
     {
-        return $this->pictures;
+        return $this->picture;
     }
 
-    public function setPictures(string $pictures): self
+    public function setPictures(string $picture): self
     {
-        $this->pictures = $pictures;
+        $this->picture = $picture;
 
         return $this;
     }
@@ -264,24 +264,12 @@ class Customers implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
-        return $this;
-    }
 
 
 }

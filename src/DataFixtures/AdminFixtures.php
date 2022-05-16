@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Admin;
+use App\Entity\Barman;
 use App\Entity\Customers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -27,7 +28,23 @@ class AdminFixtures extends Fixture
         ]);
 
         $manager->persist($admin);
-        $manager->flush();
+
+        for ($i = 10; $i <= 20; $i++){
+            $barman = new Barman();
+
+            $barman->setEmail('barman' . $i . '@gmail.com');
+            $barman->setRoles([
+                'ROLE_USER',
+                'ROLE_BAROWNER'
+            ]);
+            $password = $this->hasher->hashPassword($barman, 'barman');
+            $barman->setPassword($password);
+            $barman->setGender('Homme');
+            $barman->setFirstName('Barmann');
+            $barman->setLastName('N° ' . $i);
+            $barman->setPhone('06 01 02 03 ' . $i);
+            $manager->persist($barman);
+        }
 
         for ($i = 10; $i <= 60; $i++){
             $customer = new Customers();
@@ -40,12 +57,12 @@ class AdminFixtures extends Fixture
             $customer->setFirstName('Customer');
             $customer->setLastName('N° ' . $i);
             $customer->setGender('Homme');
-            $customer->setMail('customer' . $i . '@gmail.com');
+            $customer->setEmail('customer' . $i . '@gmail.com');
 
             $manager->persist($customer);
         }
 
-        $manager->flush($customer);
+        $manager->flush();
 
     }
 }

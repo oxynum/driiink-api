@@ -106,14 +106,14 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getPictures(): ?string
+    public function getPicture(): ?string
     {
-        return $this->pictures;
+        return $this->picture;
     }
 
-    public function setPictures(string $pictures): self
+    public function setPicture(string $picture): self
     {
-        $this->pictures = $pictures;
+        $this->picture = $picture;
 
         return $this;
     }
@@ -123,22 +123,10 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 }

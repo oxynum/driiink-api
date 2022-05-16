@@ -31,6 +31,9 @@ class OrderStatus
     #[Gedmo\Timestampable(on: 'update')]
     private $updatedAt;
 
+    #[ORM\Column(type: 'boolean')]
+    private $refund;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -93,21 +96,19 @@ class OrderStatus
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function isRefund(): ?bool
     {
-        $this->updatedAt = $updatedAt;
+        return $this->refund;
+    }
+
+    public function setRefund(bool $refund): self
+    {
+        $this->refund = $refund;
 
         return $this;
     }
