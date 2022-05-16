@@ -6,6 +6,8 @@ use App\Repository\OrderStatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 #[ORM\Entity(repositoryClass: OrderStatusRepository::class)]
 class OrderStatus
@@ -21,10 +23,12 @@ class OrderStatus
     #[ORM\OneToMany(mappedBy: 'statusID', targetEntity: Order::class, orphanRemoval: true)]
     private $orders;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
+    #[Gedmo\Timestampable(on: 'create')]
     private $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
+    #[Gedmo\Timestampable(on: 'update')]
     private $updatedAt;
 
     public function __construct()

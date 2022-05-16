@@ -6,6 +6,8 @@ use App\Repository\BarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 #[ORM\Entity(repositoryClass: BarRepository::class)]
 class Bar
@@ -24,10 +26,13 @@ class Bar
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'bars')]
     private $groupe;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
+    #[Gedmo\Timestampable(on: 'create')]
     private $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
+    #[Gedmo\Timestampable(on: 'update')]
+
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Barman::class, mappedBy: 'barOwned')]
