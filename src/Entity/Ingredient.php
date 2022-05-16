@@ -11,8 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-
-
+#[ApiResource]
 class Ingredient
 {
     #[ORM\Id]

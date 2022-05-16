@@ -13,8 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
-
-
+#[ApiResource]
 class Order
 {
     #[ORM\Id]

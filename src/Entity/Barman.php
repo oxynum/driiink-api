@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 
 #[ORM\Entity(repositoryClass: BarmanRepository::class)]
+
 class Barman implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
