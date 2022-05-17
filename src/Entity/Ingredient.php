@@ -85,7 +85,7 @@ class Ingredient
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->addIngredientID($this);
+            $product->addIngredient($this);
         }
 
         return $this;
@@ -94,7 +94,7 @@ class Ingredient
     public function removeProduct(Products $product): self
     {
         if ($this->products->removeElement($product)) {
-            $product->removeIngredientID($this);
+            $product->removeIngredient($this);
         }
 
         return $this;
@@ -117,13 +117,13 @@ class Ingredient
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
