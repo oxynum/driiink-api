@@ -52,15 +52,7 @@ class CustomersCrudController extends AbstractCrudController
             ChoiceField::new('roles')->allowMultipleChoices()->setChoices([
                 'User' => 'ROLE_USER',
             ]),
-            ImageField::new('picture')
-                ->setUploadDir('public/uploads/user')
-                ->setBasePath('uploads/user')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setFormTypeOptions([
-                    'attr' => [
-                        'accept' => 'image/png, image/jpeg'
-                    ]
-                ]),
+            TextField::new('picture'),
             AssociationField::new('orders')->hideOnIndex()->setDisabled(),
             AssociationField::new('barFavorite')->hideOnIndex(),
             TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),

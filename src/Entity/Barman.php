@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BarmanRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 
 #[ORM\Entity(repositoryClass: BarmanRepository::class)]
-
+#[ApiResource]
 class Barman implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

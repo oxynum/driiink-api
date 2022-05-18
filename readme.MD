@@ -9,7 +9,7 @@
 
   <p align="center">
     DRIIINK API is the api that will be used in our app, DRIINK. The goal of this app <br />
-    is to make order at a bar more easier
+    is to make ordering at a bar more easier
     <br />
     <a href="https://github.com/oxynum/driiink-api"><strong>Explore the docs »</strong></a>
     <br />
@@ -45,7 +45,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Launch by Oxynum, DRIIINK is an app to make order easier at a bar. This repo contains the API that will be used in the app. Built with Symfony, API platform and JWT, it permits to have
+Launch by Oxynum, DRIIINK is an app to make ordering easier at a bar. This repo contains the API that will be used in the app. Built with Symfony, API platform and JWT, it permits to have
 full access to every data store in the database and to interact with it. The APi is secured by a JWT token only accessible for those considered as an admin. 
 
 If you want to get access to the api you need to contact Oxynum. 
@@ -136,13 +136,13 @@ There is a list of everything you need to have to install the project.
 ## Usage
 
 You now have installed the project on your computer. You will now have access to a webpage at [https://localhost:8000](https://localhost:8000).
-There is 3 route you have to know :
+There are 3 route you have to know :
 1. [https://localhost:8000/api/docs](https://localhost:8000/api/docs) <br />
    This link will lead you to the documentation of the API.
      
 
 2. [https://localhost:8000/admin](https://localhost:8000/admin) <br />
-   This link will lead you to the admin panel that permit to access/edit/remove ever information of the app.
+   This link will lead you to the admin panel that permit to access/edit/remove ever information about the app.
 
 
 3. [https://localhost:8000/login_check](https://localhost:8000/login_check) <br />

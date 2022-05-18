@@ -53,15 +53,7 @@ class BarmanCrudController extends AbstractCrudController
                 'Barmen' => 'ROLE_BAROWNER',
                 'User' => 'ROLE_USER',
             ]),
-            ImageField::new('picture')
-                ->setUploadDir('public/uploads/barmen')
-                ->setBasePath('uploads/barmen')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setFormTypeOptions([
-                    'attr' => [
-                        'accept' => 'image/png, image/jpeg'
-                    ]
-                ]),
+            TextField::new('picture'),
             AssociationField::new('barOwned')->hideOnIndex(),
             TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
             TimeField::new('updatedAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),

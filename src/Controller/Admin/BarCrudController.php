@@ -23,15 +23,7 @@ class BarCrudController extends AbstractCrudController
         return [
             IdField::new('id')->setDisabled(),
             TextField::new('name'),
-            ImageField::new('picture')
-                ->setUploadDir('public/uploads/bar')
-                ->setBasePath('uploads/bar')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setFormTypeOptions([
-                    'attr' => [
-                        'accept' => 'image/png, image/jpeg'
-                    ]
-                ]),
+            TextField::new('picture'),
             AssociationField::new('groupe'),
             AssociationField::new('barmen')->hideOnIndex(),
             AssociationField::new('menu')->hideOnIndex(),

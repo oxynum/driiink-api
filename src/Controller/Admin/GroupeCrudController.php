@@ -23,15 +23,7 @@ class GroupeCrudController extends AbstractCrudController
         return [
             IdField::new('id')->setDisabled(),
             TextField::new('name'),
-            ImageField::new('picture')
-                ->setUploadDir('public/uploads/groupe')
-                ->setBasePath('uploads/groupe')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setFormTypeOptions([
-                    'attr' => [
-                        'accept' => 'image/png, image/jpeg'
-                    ]
-                ]),
+            TextField::new('picture'),
             AssociationField::new('bars'),
             TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
             TimeField::new('updatedAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
