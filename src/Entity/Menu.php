@@ -11,7 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    denormalizationContext: ['product' => ['read']]
+)]
 class Menu
 {
     #[ORM\Id]

@@ -95,4 +95,8 @@ class ProductCategory
         return $this->updatedAt;
     }
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }

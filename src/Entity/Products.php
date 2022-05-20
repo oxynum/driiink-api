@@ -8,33 +8,41 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['product']])]
 class Products
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("product")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("product")]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("product")]
     private $description;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("product")]
     private $price;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups("product")]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'products')]
+    #[Groups("product")]
     private $ingredient;
 
     #[ORM\Column(type: 'time')]
+    #[Groups("product")]
     private $prepTime;
 
     #[ORM\Column(type: 'datetime')]
@@ -49,6 +57,7 @@ class Products
     private $menus;
 
     #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
+    #[Groups("product")]
     private $category;
 
 

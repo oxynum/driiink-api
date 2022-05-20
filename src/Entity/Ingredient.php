@@ -8,10 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['ingredient' => ['read']],
+)]
 class Ingredient
 {
     #[ORM\Id]
@@ -20,16 +23,15 @@ class Ingredient
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("product")]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups("product")]
     private $picture;
 
-    #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'ingredientID')]
+    #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'ingredientID', orphanRemoval: true)]
     private $products;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $description;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
@@ -103,18 +105,6 @@ class Ingredient
     public function __toString(): string
     {
         return $this->getName();
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface

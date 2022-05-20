@@ -22,7 +22,7 @@ class OrderStatus
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\OneToMany(mappedBy: 'statusID', targetEntity: Order::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'statusID', targetEntity: Order::class)]
     private $orders;
 
     #[ORM\Column(type: 'datetime')]
