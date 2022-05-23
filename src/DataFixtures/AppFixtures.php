@@ -76,9 +76,15 @@ class AppFixtures extends Fixture
         $ir = $manager->getRepository(Ingredient::class);
         $allIngredient = $ir->findAll();
 
-        for ($i = 0; $i <= 15; $i++){
+        $categories = [
+            'bière - bouteilles','Cocktails','Apéro & tonic','Mocktails','Shots - 3cl', 'Apéritifs / digestifs',
+            'Bourbon','Rhum','Scotch Whisky','Selection "Jack"','Téquila','Vodka','Whisky irlandais', 'Gin & tonic',
+            'Champagne', 'Vin rouge', 'Vin blanc', 'Vin rosé', 'boissons chaudes', 'Soft'
+            ];
+
+        foreach ($categories as $cat){
             $category = new ProductCategory();
-            $category->setName('Catégorie ' . $i);
+            $category->setName($cat);
             $manager->persist($category);
         }
 

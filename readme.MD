@@ -145,7 +145,7 @@ There are 3 route you have to know :
    This link will lead you to the admin panel that permit to access/edit/remove ever information about the app.
 
 
-3. [https://localhost:8000/login_check](https://localhost:8000/login_check) <br />
+3. [https://localhost:8000/api/login_check](https://localhost:8000/api/login_check) <br />
    This link is a route to get the JWT token to get access to the API. You need to send a POST request with a couple email/password
    in the body like so :
    ```json
