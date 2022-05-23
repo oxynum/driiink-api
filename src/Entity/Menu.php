@@ -27,7 +27,7 @@ class Menu
     #[ORM\ManyToMany(targetEntity: Products::class, inversedBy: 'menus')]
     private $product;
 
-    #[ORM\Column(type: 'time_immutable')]
+    #[ORM\Column(type: 'time_immutable', nullable: true)]
     private $activeUntil;
 
     #[ORM\Column(type: 'datetime')]
