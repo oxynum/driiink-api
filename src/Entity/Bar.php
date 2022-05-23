@@ -8,47 +8,60 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 
 #[ORM\Entity(repositoryClass: BarRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['bar']])]
 class Bar
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("bar")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("bar")]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups("bar")]
     private $picture;
 
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'bars')]
+    #[Groups("bar")]
     private $groupe;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
-
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Barman::class, mappedBy: 'barOwned')]
-    private $barmen;
+    #[Groups("bar")]
+    private $barman;
 
     #[ORM\ManyToOne(targetEntity: Customers::class, inversedBy: 'barFavorite')]
+    #[Groups("bar")]
     private $customers;
 
     #[ORM\OneToMany(mappedBy: 'bar', targetEntity: Menu::class)]
+    #[Groups("bar")]
     private $menu;
 
     public function __construct()
     {
-        $this->barmen = new ArrayCollection();
+        $this->barman = new ArrayCollection();
         $this->menu = new ArrayCollection();
     }
 
@@ -108,15 +121,15 @@ class Bar
     /**
      * @return Collection<int, Barman>
      */
-    public function getBarmen(): Collection
+    public function getbarman(): Collection
     {
-        return $this->barmen;
+        return $this->barman;
     }
 
     public function addBarman(Barman $barman): self
     {
-        if (!$this->barmen->contains($barman)) {
-            $this->barmen[] = $barman;
+        if (!$this->barman->contains($barman)) {
+            $this->barman[] = $barman;
             $barman->addBarOwned($this);
         }
 
@@ -125,7 +138,7 @@ class Bar
 
     public function removeBarman(Barman $barman): self
     {
-        if ($this->barmen->removeElement($barman)) {
+        if ($this->barman->removeElement($barman)) {
             $barman->removeBarOwned($this);
         }
 

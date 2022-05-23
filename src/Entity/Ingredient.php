@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
@@ -30,17 +32,19 @@ class Ingredient
     #[Groups("product")]
     private $picture;
 
-    #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'ingredientID', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'ingredient', orphanRemoval: true)]
     private $products;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
     #[Groups("product")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
     #[Groups("product")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $updatedAt;
 
     public function __construct()

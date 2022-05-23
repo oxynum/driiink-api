@@ -8,12 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
-#[ApiResource(
-    denormalizationContext: ['product' => ['read']]
-)]
+#[ApiResource]
 class Menu
 {
     #[ORM\Id]
@@ -22,24 +23,38 @@ class Menu
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("bar")]
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Products::class, inversedBy: 'menus')]
+    #[Groups("bar")]
     private $product;
 
-    #[ORM\Column(type: 'time_immutable', nullable: true)]
-    private $activeUntil;
+    #[ORM\Column(type: 'time_immutable')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'H:m:s'])]
+    private $activeAt;
+
+    #[ORM\Column(type: 'time_immutable')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'H:m:s'])]
+    private $desactiveAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Bar::class, inversedBy: 'menu')]
     private $bar;
+
 
     public function __construct()
     {
@@ -87,14 +102,14 @@ class Menu
         return $this;
     }
 
-    public function getActiveUntil(): ?\DateTimeImmutable
+    public function getActiveAt(): ?\DateTimeImmutable
     {
-        return $this->activeUntil;
+        return $this->activeAt;
     }
 
-    public function setActiveUntil(\DateTimeImmutable $activeUntil): self
+    public function setActiveAt(\DateTimeImmutable $activeAt): self
     {
-        $this->activeUntil = $activeUntil;
+        $this->activeAt = $activeAt;
 
         return $this;
     }
@@ -125,5 +140,17 @@ class Menu
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getDesactiveAt(): ?\DateTimeImmutable
+    {
+        return $this->desactiveAt;
+    }
+
+    public function setDesactiveAt(\DateTimeImmutable $desactiveAt): self
+    {
+        $this->desactiveAt = $desactiveAt;
+
+        return $this;
     }
 }

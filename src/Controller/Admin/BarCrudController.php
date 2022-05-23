@@ -3,10 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Bar;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 
@@ -18,6 +18,7 @@ class BarCrudController extends AbstractCrudController
     }
 
 
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -25,6 +26,7 @@ class BarCrudController extends AbstractCrudController
             TextField::new('name'),
             TextField::new('picture'),
             AssociationField::new('groupe'),
+            AssociationField::new('menu'),
             AssociationField::new('barmen')->hideOnIndex(),
             AssociationField::new('menu')->hideOnIndex(),
             TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),

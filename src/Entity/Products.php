@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
@@ -18,46 +20,51 @@ class Products
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $description;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $price;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'products')]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $ingredient;
 
     #[ORM\Column(type: 'time')]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'H:m:s'])]
     private $prepTime;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
+    #[Groups(["bar", "product"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
+    #[Groups(["bar", "product"])]
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'product')]
     private $menus;
 
     #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
-    #[Groups("product")]
+    #[Groups(["bar", "product"])]
     private $category;
 
 

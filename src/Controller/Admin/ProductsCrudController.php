@@ -2,11 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\EasyAdmin\PrepField;
 use App\Entity\Products;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -27,7 +28,7 @@ class ProductsCrudController extends AbstractCrudController
             TextField::new('description'),
             MoneyField::new('price')->setCurrency('EUR'),
             TextField::new('picture'),
-            TimeField::new('prepTime')->setFormat('mm:ss'),
+            TimeField::new('prepTime')->setFormat("HH:mm:ss"),
             AssociationField::new('ingredient'),
             AssociationField::new('menus'),
             AssociationField::new('category'),

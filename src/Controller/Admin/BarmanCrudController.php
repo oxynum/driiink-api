@@ -50,7 +50,7 @@ class BarmanCrudController extends AbstractCrudController
             TelephoneField::new('phone'),
             TextField::new('password')->hideOnIndex()->hideWhenUpdating()->setFormType(PasswordType::class),
             ChoiceField::new('roles')->allowMultipleChoices()->setChoices([
-                'Barmen' => 'ROLE_BAROWNER',
+                'Barman' => 'ROLE_BAROWNER',
                 'User' => 'ROLE_USER',
             ]),
             TextField::new('picture'),

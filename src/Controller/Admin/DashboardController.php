@@ -45,7 +45,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Symfony Docker');
+            ->setTitle('DRIINK API');
     }
 
     public function configureMenuItems(): iterable

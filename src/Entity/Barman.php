@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 
 #[ORM\Entity(repositoryClass: BarmanRepository::class)]
@@ -19,9 +22,11 @@ class Barman implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("bar")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Groups("bar")]
     private $email;
 
     #[ORM\Column(type: 'json')]
@@ -31,26 +36,35 @@ class Barman implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("bar")]
     private $gender;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("bar")]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("bar")]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Groups("bar")]
     private $phone;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups("bar")]
     private $picture;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
+    #[Groups("bar")]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Bar::class, inversedBy: 'barmen')]
