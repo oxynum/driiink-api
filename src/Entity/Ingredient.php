@@ -35,10 +35,12 @@ class Ingredient
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Groups("product")]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
+    #[Groups("product")]
     private $updatedAt;
 
     public function __construct()

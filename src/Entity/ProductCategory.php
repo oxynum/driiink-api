@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductCategoryRepository::class)]
 #[ApiResource]
@@ -19,6 +20,7 @@ class ProductCategory
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("product")]
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class)]
@@ -26,6 +28,7 @@ class ProductCategory
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
