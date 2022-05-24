@@ -20,51 +20,48 @@ class Products
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $description;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $price;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'products')]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $ingredient;
 
     #[ORM\Column(type: 'time')]
-    #[Groups(["bar", "product"])]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'H:m:s'])]
+    #[Groups(["menu", "product"])]
     private $prepTime;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'product')]
     private $menus;
 
     #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
-    #[Groups(["bar", "product"])]
+    #[Groups(["menu", "product"])]
     private $category;
 
 

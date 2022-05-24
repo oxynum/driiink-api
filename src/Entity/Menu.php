@@ -8,57 +8,57 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['menu']])]
 class Menu
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["menu", "bar"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("bar")]
+    #[Groups(["menu", "bar"])]
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Products::class, inversedBy: 'menus')]
-    #[Groups("bar")]
+    #[Groups("menu")]
     private $product;
 
     #[ORM\Column(type: 'time_immutable')]
-    #[Groups("bar")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'H:m:s'])]
+    #[Groups(["menu", "bar"])]
     private $activeAt;
 
     #[ORM\Column(type: 'time_immutable')]
-    #[Groups("bar")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'H:m:s'])]
+    #[Groups(["menu", "bar"])]
     private $desactiveAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Groups("bar")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
+    #[Groups(["menu", "bar"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
-    #[Groups("bar")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
+    #[Groups(["menu", "bar"])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Bar::class, inversedBy: 'menu')]
     private $bar;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: Promotion::class)]
+    #[Groups("menu")]
+    private $promotion;
+
 
     public function __construct()
     {
         $this->product = new ArrayCollection();
+        $this->promotion = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,6 +150,36 @@ class Menu
     public function setDesactiveAt(\DateTimeImmutable $desactiveAt): self
     {
         $this->desactiveAt = $desactiveAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotion>
+     */
+    public function getPromotion(): Collection
+    {
+        return $this->promotion;
+    }
+
+    public function addPromotion(Promotion $promotion): self
+    {
+        if (!$this->promotion->contains($promotion)) {
+            $this->promotion[] = $promotion;
+            $promotion->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion): self
+    {
+        if ($this->promotion->removeElement($promotion)) {
+            // set the owning side to null (unless already changed)
+            if ($promotion->getMenu() === $this) {
+                $promotion->setMenu(null);
+            }
+        }
 
         return $this;
     }

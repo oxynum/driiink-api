@@ -38,13 +38,11 @@ class Bar
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
     #[Groups("bar")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
     #[Groups("bar")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
     private $updatedAt;
 
     #[ORM\ManyToMany(targetEntity: Barman::class, mappedBy: 'barOwned')]

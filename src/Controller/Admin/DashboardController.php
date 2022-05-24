@@ -13,6 +13,7 @@ use App\Entity\Order;
 use App\Entity\OrderStatus;
 use App\Entity\ProductCategory;
 use App\Entity\Products;
+use App\Entity\Promotion;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -63,6 +64,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Ingrédient', 'fas fa-list', Ingredient::class);
         yield MenuItem::linkToCrud('Produits', 'fas fa-list', Products::class);
         yield MenuItem::linkToCrud('Catégorie de produits', 'fas fa-list', ProductCategory::class);
+        yield MenuItem::linkToCrud('Promotion', 'fas fa-list', Promotion::class);
         yield MenuItem::section('Commandes');
         yield MenuItem::linkToCrud('Status', 'fas fa-list', OrderStatus::class);
         yield MenuItem::linkToCrud('Commandes', 'fas fa-list', Order::class);

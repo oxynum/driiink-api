@@ -22,14 +22,15 @@ class Ingredient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["menu","product"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("product")]
+    #[Groups(["menu","product"])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups("product")]
+    #[Groups(["menu","product"])]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'ingredient', orphanRemoval: true)]
@@ -37,14 +38,12 @@ class Ingredient
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Groups("product")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
+    #[Groups(["menu","product"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
-    #[Groups("product")]
-    #[Context([DateTimeNormalizer::FORMAT_KEY => 'd/m/Y H:m:s'])]
+    #[Groups(["menu","product"])]
     private $updatedAt;
 
     public function __construct()
