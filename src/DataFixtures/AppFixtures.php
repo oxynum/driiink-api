@@ -111,7 +111,6 @@ class AppFixtures extends Fixture
         for ($i = 0; $i <= 5; $i++){
             $menu = new Menu();
             $menu->setName('Menu N° ' . $i);
-            $menu->setActiveUntil(new \DateTimeImmutable());
             $menu->setBar($allBar[rand(0, count($allBar) - 1)]);
             for($j = 0; $j <= 10; $j++){
                 $menu->addProduct($allProduct[rand(0, count($allProduct) - 1)]);
