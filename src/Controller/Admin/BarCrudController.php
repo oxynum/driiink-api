@@ -27,7 +27,7 @@ class BarCrudController extends AbstractCrudController
             TextField::new('picture'),
             AssociationField::new('groupe'),
             AssociationField::new('menu'),
-            AssociationField::new('barmen')->hideOnIndex(),
+            AssociationField::new('barman')->hideOnIndex(),
             AssociationField::new('menu')->hideOnIndex(),
             TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
             TimeField::new('updatedAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
