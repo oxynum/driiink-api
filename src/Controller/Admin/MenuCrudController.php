@@ -25,7 +25,7 @@ class MenuCrudController extends AbstractCrudController
         return [
             IdField::new('id')->setDisabled(),
             TextField::new('name'),
-            AssociationField::new('product'),
+            AssociationField::new('products'),
             AssociationField::new('bar'),
             TimeField::new('activeAt')->setFormat('HH:mm:ss'),
             TimeField::new('desactiveAt')->setFormat('HH:mm:ss'),

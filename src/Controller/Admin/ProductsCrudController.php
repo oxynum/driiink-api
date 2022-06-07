@@ -30,7 +30,7 @@ class ProductsCrudController extends AbstractCrudController
             TextField::new('picture'),
             TimeField::new('prepTime')->setFormat("HH:mm:ss"),
             AssociationField::new('ingredient'),
-            AssociationField::new('menus'),
+            AssociationField::new('menu'),
             AssociationField::new('category'),
             TimeField::new('createdAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),
             TimeField::new('updatedAt')->setDisabled()->hideOnForm()->setTimezone('Europe/Paris')->setFormat('dd/MM/y HH:mm:ss'),

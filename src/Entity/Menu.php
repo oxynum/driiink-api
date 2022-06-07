@@ -54,11 +54,15 @@ class Menu
     #[Groups("menu")]
     private $promotion;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: Products::class)]
+    private $products;
+
 
     public function __construct()
     {
         $this->product = new ArrayCollection();
         $this->promotion = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,5 +186,13 @@ class Menu
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Products>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
     }
 }

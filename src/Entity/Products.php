@@ -57,12 +57,12 @@ class Products
     #[Groups(["menu", "product"])]
     private $updatedAt;
 
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'product')]
-    private $menus;
-
     #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
     #[Groups(["menu", "product"])]
     private $category;
+
+    #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'products')]
+    private $menu;
 
 
 
@@ -178,32 +178,6 @@ class Products
         return $this->updatedAt;
     }
 
-    /**
-     * @return Collection<int, Menu>
-     */
-    public function getMenus(): Collection
-    {
-        return $this->menus;
-    }
-
-    public function addMenu(Menu $menu): self
-    {
-        if (!$this->menus->contains($menu)) {
-            $this->menus[] = $menu;
-            $menu->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMenu(Menu $menu): self
-    {
-        if ($this->menus->removeElement($menu)) {
-            $menu->removeProduct($this);
-        }
-
-        return $this;
-    }
 
     public function getCategory(): ?ProductCategory
     {
@@ -213,6 +187,18 @@ class Products
     public function setCategory(?ProductCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getMenu(): ?Menu
+    {
+        return $this->menu;
+    }
+
+    public function setMenu(?Menu $menu): self
+    {
+        $this->menu = $menu;
 
         return $this;
     }
