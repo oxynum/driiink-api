@@ -57,12 +57,14 @@ class Products
     #[Groups(["menu", "product"])]
     private $updatedAt;
 
+
     #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
     #[Groups(["menu", "product"])]
     private $category;
 
-    #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'products')]
+    #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'products')]
     private $menu;
+
 
 
 
@@ -70,6 +72,7 @@ class Products
     {
         $this->ingredient = new ArrayCollection();
         $this->menus = new ArrayCollection();
+        $this->menu = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,7 +181,6 @@ class Products
         return $this->updatedAt;
     }
 
-
     public function getCategory(): ?ProductCategory
     {
         return $this->category;
@@ -191,15 +193,28 @@ class Products
         return $this;
     }
 
-    public function getMenu(): ?Menu
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenu(): Collection
     {
         return $this->menu;
     }
 
-    public function setMenu(?Menu $menu): self
+    public function addMenu(Menu $menu): self
     {
-        $this->menu = $menu;
+        if (!$this->menu->contains($menu)) {
+            $this->menu[] = $menu;
+        }
 
         return $this;
     }
+
+    public function removeMenu(Menu $menu): self
+    {
+        $this->menu->removeElement($menu);
+
+        return $this;
+    }
+
 }

@@ -54,8 +54,9 @@ class Menu
     #[Groups("menu")]
     private $promotion;
 
-    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: Products::class)]
+    #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'menu')]
     private $products;
+
 
 
     public function __construct()
@@ -78,30 +79,6 @@ class Menu
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Products>
-     */
-    public function getProduct(): Collection
-    {
-        return $this->product;
-    }
-
-    public function addProduct(Products $product): self
-    {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Products $product): self
-    {
-        $this->product->removeElement($product);
 
         return $this;
     }
@@ -195,4 +172,24 @@ class Menu
     {
         return $this->products;
     }
+
+    public function addProduct(Products $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Products $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            $product->removeMenu($this);
+        }
+
+        return $this;
+    }
+
 }
