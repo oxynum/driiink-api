@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['menu']])]
+#[ApiResource(normalizationContext: ['groups' => ['menu']] , order: ["product.category"])]
 class Menu
 {
     #[ORM\Id]
@@ -24,10 +24,6 @@ class Menu
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["menu", "bar"])]
     private $name;
-
-    #[ORM\ManyToMany(targetEntity: Products::class, inversedBy: 'menus')]
-    #[Groups("menu")]
-    private $product;
 
     #[ORM\Column(type: 'time_immutable')]
     #[Groups(["menu", "bar"])]
@@ -55,6 +51,7 @@ class Menu
     private $promotion;
 
     #[ORM\ManyToMany(targetEntity: Products::class, mappedBy: 'menu')]
+    #[Groups("menu")]
     private $products;
 
 
