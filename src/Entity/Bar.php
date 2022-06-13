@@ -57,6 +57,9 @@ class Bar
     #[Groups("bar")]
     private $menu;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $adress;
+
     public function __construct()
     {
         $this->barman = new ArrayCollection();
@@ -188,5 +191,17 @@ class Bar
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getAdress(): ?string
+    {
+        return $this->adress;
+    }
+
+    public function setAdress(?string $adress): self
+    {
+        $this->adress = $adress;
+
+        return $this;
     }
 }

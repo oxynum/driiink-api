@@ -26,6 +26,7 @@ class BarCrudController extends AbstractCrudController
             TextField::new('name'),
             TextField::new('picture'),
             AssociationField::new('groupe'),
+            TextField::new('adress'),
             AssociationField::new('menu'),
             AssociationField::new('barman')->hideOnIndex(),
             AssociationField::new('menu')->hideOnIndex(),
