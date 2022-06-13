@@ -58,6 +58,7 @@ class Bar
     private $menu;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups("bar")]
     private $adress;
 
     public function __construct()
