@@ -10,3 +10,18 @@ api_login_check:
     path: /api/login_check
     methods: ['POST']
 
+paymentIntent:
+    path: /api/paymentIntent
+    methods: ['POST']
+    controller: App\Controller\CreatePaymentIntentController::createPaymentIntent
+
+paymentMethod:
+    path: /api/paymentMethod
+    methods: ['POST']
+    controller: App\Controller\CreatePaymentMethodController::createPaymentMethod
+
+confirmPaymentIntent:
+    path: /api/confirmPayment
+    methods: ['POST']
+    controller: App\Controller\ConfirmPaymentIntentController::confirmPaymentIntent
+

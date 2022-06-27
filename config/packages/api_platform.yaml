@@ -1,4 +1,5 @@
 api_platform:
+    title: 'DRIIINK API DOCS'
     eager_loading:
         max_joins: 100
     formats:
