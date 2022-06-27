@@ -18,9 +18,11 @@ class ConfirmPaymentIntentController extends AbstractController
             $this->getParameter('stripe_sk_key')
 
         );
-        $stripe->paymentIntents->confirm(
+
+        return new JsonResponse($stripe->paymentIntents->confirm(
             $body['paymentIntentID'],
             ['payment_method' => $body['paymentMethodID']]
+        )
         );
     }
 }
