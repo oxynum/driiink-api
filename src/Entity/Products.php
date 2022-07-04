@@ -20,46 +20,45 @@ class Products
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $description;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $price;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $picture;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'products')]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $ingredient;
 
     #[ORM\Column(type: 'time')]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $prepTime;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $updatedAt;
 
-
     #[ORM\ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
-    #[Groups(["menu", "product"])]
+    #[Groups(["menu", "product", "order"])]
     private $category;
 
     #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'products')]

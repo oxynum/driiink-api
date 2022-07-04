@@ -9,35 +9,42 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['order']])]
 class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("order")]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: OrderStatus::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("order")]
     private $status;
 
     #[ORM\ManyToMany(targetEntity: Products::class)]
+    #[Groups("order")]
     private $product;
 
     #[ORM\ManyToOne(targetEntity: Customers::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups("order")]
     private $customer;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Groups("order")]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
+    #[Groups("order")]
     private $updatedAt;
 
     public function __construct()

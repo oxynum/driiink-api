@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: OrderStatusRepository::class)]
@@ -17,9 +18,11 @@ class OrderStatus
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("order")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("order")]
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'statusID', targetEntity: Order::class)]
@@ -27,13 +30,16 @@ class OrderStatus
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
+    #[Groups("order")]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
+    #[Groups("order")]
     private $updatedAt;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups("order")]
     private $refund;
 
     public function __construct()
