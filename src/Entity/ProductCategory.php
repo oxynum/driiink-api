@@ -19,11 +19,11 @@ class ProductCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["menu","product"])]
+    #[Groups(["menu","product","order"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["menu","product"])]
+    #[Groups(["menu","product","order"])]
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class)]
@@ -31,12 +31,12 @@ class ProductCategory
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Groups(["menu","product"])]
+    #[Groups(["menu","product","order"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
-    #[Groups(["menu","product"])]
+    #[Groups(["menu","product","order"])]
     private $updatedAt;
 
     public function __construct()

@@ -28,10 +28,6 @@ class Order
     #[Groups("order")]
     private $status;
 
-    #[ORM\ManyToMany(targetEntity: Products::class)]
-    #[Groups("order")]
-    private $product;
-
     #[ORM\ManyToOne(targetEntity: Customers::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: true)]
     #[Groups("order")]
@@ -47,9 +43,14 @@ class Order
     #[Groups("order")]
     private $updatedAt;
 
+    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ["persist"])]
+    #[Groups("order")]
+    private $orderItems;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,30 +66,6 @@ class Order
     public function setStatus(?OrderStatus $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Products>
-     */
-    public function getProduct(): Collection
-    {
-        return $this->product;
-    }
-
-    public function addProduct(Products $product): self
-    {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Products $product): self
-    {
-        $this->product->removeElement($product);
 
         return $this;
     }
@@ -115,4 +92,38 @@ class Order
         return $this->updatedAt;
     }
 
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
+            $orderItem->setOrderRef($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getOrderRef() === $this) {
+                $orderItem->setOrderRef(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getId();
+    }
 }

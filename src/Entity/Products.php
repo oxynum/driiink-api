@@ -64,6 +64,9 @@ class Products
     #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'products')]
     private $menu;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
+    private $orderItems;
+
 
 
 
@@ -72,6 +75,7 @@ class Products
         $this->ingredient = new ArrayCollection();
         $this->menus = new ArrayCollection();
         $this->menu = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -212,6 +216,36 @@ class Products
     public function removeMenu(Menu $menu): self
     {
         $this->menu->removeElement($menu);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
+            $orderItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getProduct() === $this) {
+                $orderItem->setProduct(null);
+            }
+        }
 
         return $this;
     }

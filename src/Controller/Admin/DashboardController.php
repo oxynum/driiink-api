@@ -10,6 +10,7 @@ use App\Entity\Groupe;
 use App\Entity\Ingredient;
 use App\Entity\Menu;
 use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Entity\OrderStatus;
 use App\Entity\ProductCategory;
 use App\Entity\Products;
@@ -68,7 +69,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Commandes');
         yield MenuItem::linkToCrud('Status', 'fas fa-list', OrderStatus::class);
         yield MenuItem::linkToCrud('Commandes', 'fas fa-list', Order::class);
-
+        yield MenuItem::linkToCrud('Order\'s item', 'fas fa-list', OrderItem::class);
 
     }
 }
