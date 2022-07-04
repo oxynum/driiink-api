@@ -29,7 +29,7 @@ class Order
     private $product;
 
     #[ORM\ManyToOne(targetEntity: Customers::class, inversedBy: 'orders')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $customer;
 
     #[ORM\Column(type: 'datetime')]
